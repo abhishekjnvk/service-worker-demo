@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Worker Demo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Service Worker Demo</h1>
+    </header>
+    <main>
+        <div id="status-message"></div>
+        <div class="image-container">
+            <img src="images/image1.jpg" alt="Image 1">
+            <img src="images/image2.jpg" alt="Image 2">
+            <img src="images/image3.jpg" alt="Image 3">
+            <img src="images/image4.jpg" alt="Image 3">
+            <img src="images/image5.jpg" alt="Image 3">
+            <img src="images/image6.jpg" alt="Image 3">
+        </div>
+    </main>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+
+            window.addEventListener('load', function() {
+                if (navigator.onLine) {
+                    document.getElementById('status-message').innerText = 'Content loaded from the internet. turn off your internet and refresh the page';
+                } else {
+                    document.getElementById('status-message').innerText = 'Content loaded from the cache.';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
